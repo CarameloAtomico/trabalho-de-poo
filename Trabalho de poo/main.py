@@ -4,6 +4,7 @@ from reel import Reel
 from button import Button
 from b_spin import B_Spin
 from b_menos import B_Menos
+from b_mais import B_Mais
 
 #atualização gráfica
 def draw_game_init():
@@ -17,7 +18,7 @@ def draw_game_init():
 #gerando os rodilhos
 def rodilhos():
     for i in range(5):
-        reels.append(Reel(200+75*i))
+        reels.append(Reel(200+75*i, 300*i))
 
 def simbolos():
     for i in reels:
@@ -32,7 +33,7 @@ def roll():
         for symbol in r:
             symbol.roll()
 
-#inicializando o jogo 
+#inicializando o jogo
 pygame.init()
 game_over = False
 screen_size = (800,800)
@@ -43,16 +44,19 @@ rodilhos()
 symbols = []
 simbolos()
 buttons = []
-buttons.append(B_Spin())
+buttons.append(B_Spin(reels))
 buttons.append(B_Menos())
-#buttons.append(B_Mais())
+buttons.append(B_Mais())
 
 
 
 #loop update
 while not game_over:
     draw_game_init()
-    roll()
+    tempo_atual = pygame.time.get_ticks()
+    #print(symbols[0][0].vel)
+    for r in reels:
+        r.atualizar(tempo_atual)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True

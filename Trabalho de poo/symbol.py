@@ -1,7 +1,7 @@
 import pygame
 import random 
 class Symbol(pygame.Rect):
-    def __init__(self, x, y, length, width, val1, vel1):
+    def __init__(self, x, y, length, width, val, reel):
         super().__init__(x, y, length, width)
         #dicionário de cores
         self.cores = {
@@ -14,9 +14,15 @@ class Symbol(pygame.Rect):
             "G": (0, 255, 255)
         }
         #valor, cor e velocidade
-        self.val = val1
+        self.val = val
         self.cor = self.cores[self.val]
-        self.vel = vel1
+        self.vel = 0
+        self.vel_max = 0
+        self.acel = 0.1
+        self.reel = reel
+        self.parada = False
+        self.pos_parada = self.y
+        
     
     def setval(self, val):
         self.val = val
@@ -25,10 +31,29 @@ class Symbol(pygame.Rect):
         self.vel = vel
     def getcor(self):
         return self.cor
-    
+
     def roll(self):
         vals = ["A", "B", "C", "D", "E", "F", "G"]
+        
+        #Aceleração simples
+        if self.vel < self.vel_max:
+            self.vel += 0.004
+        else:
+            self.vel = self.vel_max
         self.y += self.vel
-        if self.y >= 575:
-            self.y = 200
+        if self.y >= 525:
+            self.y = self.y - 375
             self.setval(random.choice(vals))
+        
+        #Retornando os simbolos para os lugares.
+        #PROBLEMA: eles só retornam depois que o botão de spin é precionado novamente!!
+        #Acho que o problema se encontra aqui abaixo, mas pode estar também no arquivo reel
+        if self.parada:
+            if self.y != self.pos_parada:
+                if self.y < self.pos_parada:
+                    self.vel = 1
+                else:
+                    self.vel = -1
+            else:
+                self.vel = 0
+                self.parada = False
