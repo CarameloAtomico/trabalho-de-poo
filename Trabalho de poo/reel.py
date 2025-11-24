@@ -21,9 +21,15 @@ class Reel:
             self.symbols.append(s)
 
     def atualizar(self, tempo_atual):
+        for s in self.symbols:
+            if self.espera and s.parada:
+                s.roll()
         if self.espera:
+            for s in self.symbols:
+                if s.y == s.pos_parada and not s.parada:
+                    s.vel_max = 0
             return
-        
+
         if tempo_atual >= self.tempo_inicio + self.delay:
             for s in self.symbols:
                 s.vel_max = 5
@@ -32,17 +38,14 @@ class Reel:
 
         if not (tempo_passado < self.duracao_giro or tempo_passado < self.duracao_giro + self.duracao_parada):
             for s in self.symbols:
-                s.vel_max = 0
-                s.vel = 0
                 self.espera = True
-            #criando uma nova lista, odenada por y dos simbolos
+            #criando uma nova lista, ordenada por y dos simbolos
             #O sinal parada é acionado
             #Talvez o erro esteja aqui, mas é improvavel
             sym_y = sorted(self.symbols, key=lambda symbol: symbol.y)
             for i in range(5):
                 sym_y[i].pos_parada = 200+75*i
                 sym_y[i].parada = True
-            return
 
         for s in self.symbols:
             s.roll()

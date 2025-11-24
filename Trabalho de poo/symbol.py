@@ -34,7 +34,7 @@ class Symbol(pygame.Rect):
 
     def roll(self):
         vals = ["A", "B", "C", "D", "E", "F", "G"]
-        
+
         #Aceleração simples
         if self.vel < self.vel_max:
             self.vel += 0.004
@@ -44,16 +44,18 @@ class Symbol(pygame.Rect):
         if self.y >= 525:
             self.y = self.y - 375
             self.setval(random.choice(vals))
-        
+
         #Retornando os simbolos para os lugares.
         #PROBLEMA: eles só retornam depois que o botão de spin é precionado novamente!!
         #Acho que o problema se encontra aqui abaixo, mas pode estar também no arquivo reel
         if self.parada:
             if self.y != self.pos_parada:
                 if self.y < self.pos_parada:
-                    self.vel = 1
+                    # Fazer estes com self.y = self.pos_parada funciona
+                    # Velocidade por algum motivo é o problema
+                    self.vel_max = 1
                 else:
-                    self.vel = -1
+                    self.vel_max = -1
             else:
                 self.vel = 0
                 self.parada = False
