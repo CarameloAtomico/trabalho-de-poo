@@ -5,13 +5,13 @@ class Symbol(pygame.Rect):
         super().__init__(x, y, length, width)
         #dicionário de cores
         self.cores = {
-            "A": (255, 255, 255),
-            "B": (255, 0, 255),
-            "C": (0, 0, 255),
-            "D": (255, 255, 0),
-            "E": (255, 0, 0),
-            "F": (0, 255, 0),
-            "G": (0, 255, 255)
+            "A": pygame.image.load('Sprites/A.png'),
+            "B": pygame.image.load('Sprites/B.png'),
+            "C": pygame.image.load('Sprites/C.png'),
+            "D": pygame.image.load('Sprites/D.png'),
+            "E": pygame.image.load('Sprites/E.png'),
+            "F": pygame.image.load('Sprites/F.png'),
+            "G": pygame.image.load('Sprites/G.png')
         }
         #valor, cor e velocidade
         self.val = val
@@ -29,33 +29,34 @@ class Symbol(pygame.Rect):
         self.cor = self.cores[self.val]
     def setvel(self, vel):
         self.vel = vel
-    def getcor(self):
+    def getspr(self):
         return self.cor
 
     def roll(self):
         vals = ["A", "B", "C", "D", "E", "F", "G"]
 
         #Aceleração simples
+        #Funciona durante o intervalo de giro
         if self.vel < self.vel_max:
-            self.vel += 0.004
+            self.vel += 0.2
         else:
             self.vel = self.vel_max
         self.y += self.vel
-        if self.y >= 525:
-            self.y = self.y - 375
+        if self.y >= 700:
+            self.y = 50
             self.setval(random.choice(vals))
 
-        #Retornando os simbolos para os lugares.
-        #PROBLEMA: eles só retornam depois que o botão de spin é precionado novamente!!
-        #Acho que o problema se encontra aqui abaixo, mas pode estar também no arquivo reel
         if self.parada:
+            self.vel = 0
             if self.y != self.pos_parada:
                 if self.y < self.pos_parada:
-                    # Fazer estes com self.y = self.pos_parada funciona
-                    # Velocidade por algum motivo é o problema
-                    self.vel_max = 1
+                    self.y += 10
+                    if self.y > self.pos_parada:
+                        self.y = self.pos_parada
                 else:
-                    self.vel_max = -1
+                    self.y -= 10
+                    if self.y < self.pos_parada:
+                        self.y = self.pos_parada
             else:
                 self.vel = 0
                 self.parada = False

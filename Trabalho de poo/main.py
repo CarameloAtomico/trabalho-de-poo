@@ -8,18 +8,27 @@ from b_mais import B_Mais
 
 #atualização gráfica
 def draw_game_init():
-    screen.fill((0,0,0))
-    for button in buttons:
-        pygame.draw.rect(screen, button.cor, button)
+    screen.fill((100,100,100))
+    #desenhar fundo branco
+    pygame.draw.rect(screen, (255,255,255), (225, 50, 750, 650))
+    #desenhar simbolos
     for r in symbols:
         for symbol in r:
-            pygame.draw.rect(screen, symbol.getcor(), symbol)
+            screen.blit(symbol.getspr(), (symbol.x, symbol.y))
+    #barreira superior
+    pygame.draw.rect(screen, (55,55,55), (225, 50, 750, 130))
+    #barreira inferior
+    pygame.draw.rect(screen, (55,55,55), (225, 570, 750, 330))
+    
+    for button in buttons:
+        pygame.draw.rect(screen, button.cor, button)
 
 #gerando os rodilhos
 def rodilhos():
     for i in range(5):
-        reels.append(Reel(200+75*i, 300*i))
+        reels.append(Reel(225+150*i, 300*i))
 
+#Catalogando simbolos
 def simbolos():
     for i in reels:
         l = []
@@ -36,7 +45,7 @@ def roll():
 #inicializando o jogo
 pygame.init()
 game_over = False
-screen_size = (800,800)
+screen_size = (1200,900)
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Trabalho de POO")
 reels = []
@@ -54,7 +63,6 @@ buttons.append(B_Mais())
 while not game_over:
     draw_game_init()
     tempo_atual = pygame.time.get_ticks()
-    #print(symbols[0][0].vel)
     for r in reels:
         r.atualizar(tempo_atual)
     for event in pygame.event.get():

@@ -3,7 +3,7 @@ from button import Button
 
 class B_Spin(Button):
     def __init__(self, reels):
-        super().__init__(275, 600, 225, 75, (0, 255, 0))
+        super().__init__(485, 700, 225, 75, (0, 255, 0))
         self.reels = reels
         
     def press(self):
