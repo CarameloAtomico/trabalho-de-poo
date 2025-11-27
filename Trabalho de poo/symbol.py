@@ -38,7 +38,7 @@ class Symbol(pygame.Rect):
         #Aceleração simples
         #Funciona durante o intervalo de giro
         if self.vel < self.vel_max:
-            self.vel += 0.2
+            self.vel += 0.3
         else:
             self.vel = self.vel_max
         self.y += self.vel

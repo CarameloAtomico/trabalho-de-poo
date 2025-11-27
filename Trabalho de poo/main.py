@@ -5,6 +5,8 @@ from button import Button
 from b_spin import B_Spin
 from b_menos import B_Menos
 from b_mais import B_Mais
+from money import Money
+from controller import Controller
 
 #atualização gráfica
 def draw_game_init():
@@ -26,7 +28,7 @@ def draw_game_init():
 #gerando os rodilhos
 def rodilhos():
     for i in range(5):
-        reels.append(Reel(225+150*i, 300*i))
+        reels.append(Reel(225+150*i, 150*i))
 
 #Catalogando simbolos
 def simbolos():
@@ -48,14 +50,16 @@ game_over = False
 screen_size = (1200,900)
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Trabalho de POO")
+money = Money()
+controller = Controller()
 reels = []
 rodilhos()
 symbols = []
 simbolos()
 buttons = []
-buttons.append(B_Spin(reels))
-buttons.append(B_Menos())
-buttons.append(B_Mais())
+buttons.append(B_Spin(controller, reels))
+buttons.append(B_Menos(controller, money))
+buttons.append(B_Mais(controller, money))
 
 
 
@@ -72,5 +76,6 @@ while not game_over:
             for button in buttons:
                 if button.collidepoint(event.pos):
                     button.press()
+    controller.atualizar()
     pygame.display.flip()
 pygame.quit()
