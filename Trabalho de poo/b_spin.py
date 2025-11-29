@@ -7,6 +7,9 @@ class B_Spin(Button):
         self.reels = reels
         
     def press(self):
+        if self.controller.money.aposta == 0:
+            return
+        
         if not self.controller.botoes_ativos:
             return
 
@@ -16,5 +19,7 @@ class B_Spin(Button):
         for r in self.reels:
             r.tempo_inicio = t
             r.espera = False
+            r.result = []
     
         self.controller.desativar_botoes()
+        

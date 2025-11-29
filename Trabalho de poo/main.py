@@ -21,14 +21,21 @@ def draw_game_init():
     pygame.draw.rect(screen, (55,55,55), (225, 50, 750, 130))
     #barreira inferior
     pygame.draw.rect(screen, (55,55,55), (225, 570, 750, 330))
-    
+    #display de aposta
+    pygame.draw.rect(screen, (255,255,255), (565, 610, 70, 70))
+    #saldo
+    screen.blit(money.show_saldo()[0], money.show_saldo()[1])
+    screen.blit(texto, texto_rect)
+    #aposta
+    screen.blit(money.show_aposta()[0], money.show_aposta()[1])
+    #desenha os botões
     for button in buttons:
         pygame.draw.rect(screen, button.cor, button)
 
 #gerando os rodilhos
 def rodilhos():
     for i in range(5):
-        reels.append(Reel(225+150*i, 150*i))
+        reels.append(Reel(225+150*i, 150*i, controller))
 
 #Catalogando simbolos
 def simbolos():
@@ -51,7 +58,7 @@ screen_size = (1200,900)
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Trabalho de POO")
 money = Money()
-controller = Controller()
+controller = Controller(money)
 reels = []
 rodilhos()
 symbols = []
@@ -60,6 +67,11 @@ buttons = []
 buttons.append(B_Spin(controller, reels))
 buttons.append(B_Menos(controller, money))
 buttons.append(B_Mais(controller, money))
+
+fnt = pygame.font.SysFont('arial', 35)
+fnt_c = (255, 255, 0)
+texto = fnt.render("Saldo:", True, fnt_c)
+texto_rect = texto.get_rect(center=(570, 850))
 
 
 

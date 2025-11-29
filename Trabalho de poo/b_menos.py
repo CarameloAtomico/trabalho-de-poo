@@ -11,4 +11,3 @@ class B_Menos(Button):
             return
 
         self.dinheiro.reduzir_aposta()
-        print("Nova aposta: ", self.dinheiro.get_aposta())

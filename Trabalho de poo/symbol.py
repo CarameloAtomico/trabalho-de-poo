@@ -33,7 +33,7 @@ class Symbol(pygame.Rect):
         return self.cor
 
     def roll(self):
-        vals = ["A", "B", "C", "D", "E", "F", "G"]
+        vals = ["A", "B", "C", "D"]#, "E", "F"]
 
         #Aceleração simples
         #Funciona durante o intervalo de giro
