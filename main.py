@@ -2,9 +2,12 @@ import pygame
 from symbol import Symbol
 from reel import Reel
 from button import Button
+from b_info import B_Info
 from b_spin import B_Spin
 from b_menos import B_Menos
 from b_mais import B_Mais
+from money import Money
+from controller import Controller
 
 #atualização gráfica
 def draw_game_init():
@@ -19,14 +22,25 @@ def draw_game_init():
     pygame.draw.rect(screen, (55,55,55), (225, 50, 750, 130))
     #barreira inferior
     pygame.draw.rect(screen, (55,55,55), (225, 570, 750, 330))
-    
+    #display de aposta
+    # pygame.draw.rect(screen, (255,255,255), (565, 610, 70, 70))
+    #saldo
+    screen.blit(money.show_saldo()[0], money.show_saldo()[1])
+    screen.blit(texto, texto_rect)
+    #aposta
+    screen.blit(money.show_aposta()[0], money.show_aposta()[1])
+    #desenha os botões
     for button in buttons:
         pygame.draw.rect(screen, button.cor, button)
+    screen.blit(info.get_sprite(), (info.x, info.y))
+    screen.blit(b_mais.show_text()[0], b_mais.show_text()[1])
+    screen.blit(b_menos.show_text()[0], b_menos.show_text()[1])
+    screen.blit(b_spin.show_text()[0], b_spin.show_text()[1])
 
 #gerando os rodilhos
 def rodilhos():
     for i in range(5):
-        reels.append(Reel(225+150*i, 300*i))
+        reels.append(Reel(225+150*i, 150*i, controller))
 
 #Catalogando simbolos
 def simbolos():
@@ -48,14 +62,26 @@ game_over = False
 screen_size = (1200,900)
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Trabalho de POO")
+money = Money()
+controller = Controller(money)
 reels = []
 rodilhos()
 symbols = []
 simbolos()
 buttons = []
-buttons.append(B_Spin(reels))
-buttons.append(B_Menos())
-buttons.append(B_Mais())
+info = B_Info(controller)
+b_mais = B_Mais(controller, money)
+b_menos = B_Menos(controller, money)
+b_spin = B_Spin(controller, reels, money)
+buttons.append(info)
+buttons.append(b_spin)
+buttons.append(b_menos)
+buttons.append(b_mais)
+
+fnt = pygame.font.SysFont('arial', 35)
+fnt_c = (255, 255, 0)
+texto = fnt.render("Saldo:", True, fnt_c)
+texto_rect = texto.get_rect(center=(600, 810))
 
 
 
@@ -72,6 +98,6 @@ while not game_over:
             for button in buttons:
                 if button.collidepoint(event.pos):
                     button.press()
+    controller.atualizar()
     pygame.display.flip()
 pygame.quit()
-#fim.

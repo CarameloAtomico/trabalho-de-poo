@@ -1,19 +1,22 @@
 import pygame
 import random 
 from symbol import Symbol
+from controller import Controller
 
 class Reel:
-    def __init__(self, x, delay):
+    def __init__(self, x, delay, controller):
         self.x = x
         self.delay = delay
         self.tempo_inicio = 0
         self.espera = True
         self.symbols = []
+        self.result = []
+        self.controller = controller
 
         self.duracao_giro = 4200
         self.duracao_parada = 1200
 
-        vals = ["A", "B", "C", "D", "E", "F"]
+        vals = ["A", "B", "C", "D"]
         
         #cirando os simbolos
         for i in range(5):
@@ -48,6 +51,8 @@ class Reel:
             for i in range(5):
                 sym_y[i].pos_parada = 50+130*i
                 sym_y[i].parada = True
+                self.result.append(sym_y[i].val)
+            self.controller.money.result.append(self.result)
 
         for s in self.symbols:
             s.roll()
