@@ -44,7 +44,7 @@ class Money:
         if self.saldo > self.aposta:
             self.aposta += 5
 
-    def reduzir_aposta(self, ):
+    def reduzir_aposta(self):
         if self.aposta > 0:
             self.aposta -= 5
     
@@ -104,4 +104,5 @@ class Money:
                     #Calculando o valor da aposta
                     self.saldo += self.payvalues["symbol"][i["val"]][i["n"]]*m
                 
+
                 self.aposta = 0
