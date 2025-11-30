@@ -50,12 +50,12 @@ class Money:
     
     def show_saldo(self):
         t_saldo = self.fnt.render(str(str(self.saldo)), True, self.fnt_c)
-        r_saldo = t_saldo.get_rect(center=(600, 860))
+        r_saldo = t_saldo.get_rect(center=(750, 860))
         return [t_saldo, r_saldo]
     
     def show_aposta(self):
         t_aposta = self.fnta.render(str(self.aposta), True, self.fnt_c)
-        r_aposta = t_aposta.get_rect(center=(600, 630))
+        r_aposta = t_aposta.get_rect(center=(750, 630))
         return [t_aposta, r_aposta]
     
     # Faz a verificação de símbolos conforme paylines

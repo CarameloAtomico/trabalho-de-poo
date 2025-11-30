@@ -3,7 +3,7 @@ from button import Button
 
 class B_Spin(Button):
     def __init__(self, controller, reels, money):
-        super().__init__(485, 700, 225, 75, (0, 255, 0))
+        super().__init__(635, 700, 225, 75, (0, 255, 0))
         self.controller = controller
         self.reels = reels
         self.money = money
@@ -11,7 +11,7 @@ class B_Spin(Button):
 
     def show_text(self):
         t_spin = self.fnta.render("SPIN", False, (255, 255, 0))
-        r_spin = t_spin.get_rect(center=(600, 738))
+        r_spin = t_spin.get_rect(center=(750, 738))
         return [t_spin, r_spin]
                 
     def press(self):

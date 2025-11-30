@@ -13,17 +13,15 @@ from controller import Controller
 def draw_game_init():
     screen.fill((100,100,100))
     #desenhar fundo branco
-    pygame.draw.rect(screen, (255,255,255), (225, 50, 750, 650))
+    pygame.draw.rect(screen, (255,255,255), (bx, 50, 750, 650))
     #desenhar simbolos
     for r in symbols:
         for symbol in r:
             screen.blit(symbol.getspr(), (symbol.x, symbol.y))
     #barreira superior
-    pygame.draw.rect(screen, (55,55,55), (225, 50, 750, 130))
+    pygame.draw.rect(screen, (55,55,55), (bx, 50, 750, 130))
     #barreira inferior
-    pygame.draw.rect(screen, (55,55,55), (225, 570, 750, 330))
-    #display de aposta
-    # pygame.draw.rect(screen, (255,255,255), (565, 610, 70, 70))
+    pygame.draw.rect(screen, (55,55,55), (bx, 570, 750, 330))
     #saldo
     screen.blit(money.show_saldo()[0], money.show_saldo()[1])
     screen.blit(texto, texto_rect)
@@ -36,11 +34,14 @@ def draw_game_init():
     screen.blit(b_mais.show_text()[0], b_mais.show_text()[1])
     screen.blit(b_menos.show_text()[0], b_menos.show_text()[1])
     screen.blit(b_spin.show_text()[0], b_spin.show_text()[1])
+    
+    if info.info_showing == True:
+        screen.blit(info.lines, (100, 600))
 
 #gerando os rodilhos
 def rodilhos():
     for i in range(5):
-        reels.append(Reel(225+150*i, 150*i, controller))
+        reels.append(Reel(bx+150*i, 150*i, controller))
 
 #Catalogando simbolos
 def simbolos():
@@ -59,9 +60,10 @@ def roll():
 #inicializando o jogo
 pygame.init()
 game_over = False
-screen_size = (1200,900)
+screen_size = (1500,900)
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Trabalho de POO")
+bx = 375
 money = Money()
 controller = Controller(money)
 reels = []
@@ -69,7 +71,7 @@ rodilhos()
 symbols = []
 simbolos()
 buttons = []
-info = B_Info(controller)
+info = B_Info(controller, screen)
 b_mais = B_Mais(controller, money)
 b_menos = B_Menos(controller, money)
 b_spin = B_Spin(controller, reels, money)
@@ -78,10 +80,11 @@ buttons.append(b_spin)
 buttons.append(b_menos)
 buttons.append(b_mais)
 
+
 fnt = pygame.font.SysFont('arial', 35)
 fnt_c = (255, 255, 0)
 texto = fnt.render("Saldo:", True, fnt_c)
-texto_rect = texto.get_rect(center=(600, 810))
+texto_rect = texto.get_rect(center=(750, 810))
 
 
 
