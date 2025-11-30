@@ -71,9 +71,7 @@ class Money:
                     break
         
             if n >= 3:
-                print(line, n)
                 return n
-        print(line, 0)
         return 0
     
     def processar_aposta(self):

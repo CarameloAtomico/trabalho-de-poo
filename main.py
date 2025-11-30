@@ -71,7 +71,7 @@ rodilhos()
 symbols = []
 simbolos()
 buttons = []
-info = B_Info(controller, screen)
+info = B_Info()
 b_mais = B_Mais(controller, money)
 b_menos = B_Menos(controller, money)
 b_spin = B_Spin(controller, reels, money)

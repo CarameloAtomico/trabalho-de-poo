@@ -2,12 +2,10 @@ import pygame
 from button import Button
 
 class B_Info(Button):
-    def __init__(self, controller, screen):
+    def __init__(self):
         super().__init__(375, 50, 50, 50, (255, 255, 255))
         self.sprite = pygame.image.load('Sprites/Info.png')
         self.lines = pygame.image.load('Sprites/Cabecalho.png')
-        self.controller = controller
-        self.screen = screen
         self.info_showing = False
 
 
@@ -17,6 +15,5 @@ class B_Info(Button):
     def press(self):
         if not self.info_showing:
             self.info_showing = True
-            
         else:
             self.info_showing = False
