@@ -18,7 +18,7 @@ class Reel:
 
         vals = ["A", "B", "C", "D"]
         
-        #cirando os simbolos
+        #criando os simbolos
         for i in range(5):
             val = random.choice(vals)
             s = Symbol(self.x, 50+130*i, 75, 75, val, self)
@@ -55,4 +55,5 @@ class Reel:
             self.controller.money.result.append(self.result)
 
         for s in self.symbols:
+
             s.roll()
